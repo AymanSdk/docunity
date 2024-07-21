@@ -5,6 +5,7 @@ import { liveblocks } from "../liveblocks";
 import { revalidatePath } from "next/cache";
 import { parseStringify } from "../utils";
 
+// ? Create a new document with the user's email
 export const createDocument = async ({
   userId,
   email,
@@ -34,7 +35,7 @@ export const createDocument = async ({
     console.log(`Error happened while creating a room: ${error}`);
   }
 };
-
+// ? Get a document by its ID
 export const getDocument = async ({
   roomId,
   userId,
@@ -57,7 +58,7 @@ export const getDocument = async ({
     console.log(`Error happened while fetching a room: ${error}`);
   }
 };
-
+// ? Update the document metadata with the new title
 export const updateDocument = async (roomId: string, title: string) => {
   try {
     const updatedRoom = await liveblocks.updateRoom(roomId, {
@@ -73,7 +74,7 @@ export const updateDocument = async (roomId: string, title: string) => {
     console.log(`Error happened while updating a room: ${error}`);
   }
 };
-
+// ? Get all the documents for a user
 export const getDocuments = async (email: string) => {
   try {
     const rooms = await liveblocks.getRooms({ userId: email });
