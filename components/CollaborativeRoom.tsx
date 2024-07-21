@@ -9,6 +9,7 @@ import { Input } from "./ui/input";
 import Image from "next/image";
 import Header from "./Header";
 import ActiveCollaborators from "./ActiveCollaborators";
+import Loader from "./Loader";
 
 const CollaborativeRoom = ({
   roomId,
@@ -70,7 +71,7 @@ const CollaborativeRoom = ({
 
   return (
     <RoomProvider id={roomId}>
-      <ClientSideSuspense fallback={<div>Loading…</div>}>
+      <ClientSideSuspense fallback={<Loader />}>
         <div className="collaborative-room">
           <Header>
             <div
