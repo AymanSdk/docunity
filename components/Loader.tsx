@@ -3,10 +3,10 @@ import React from "react";
 
 const Loader = () => {
   return (
-    <div className="Loader">
+    <div className="loader">
       <Image
         src="/assets/icons/loader.svg"
-        alt="Loader"
+        alt="oader"
         width={32}
         height={32}
         className="animate-spin"
