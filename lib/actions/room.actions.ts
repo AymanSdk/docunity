@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import { liveblocks } from "../liveblocks";
 import { revalidatePath } from "next/cache";
 import { getAccessType, parseStringify } from "../utils";
+import { redirect } from "next/navigation";
 
 // ? Create a new document with the user's email
 export const createDocument = async ({
@@ -26,7 +27,7 @@ export const createDocument = async ({
     const room = await liveblocks.createRoom(roomId, {
       metadata,
       usersAccesses,
-      defaultAccesses: ["room:write"],
+      defaultAccesses: [],
     });
     revalidatePath("/");
 
@@ -46,12 +47,11 @@ export const getDocument = async ({
   try {
     const room = await liveblocks.getRoom(roomId);
 
-    // TODO: Bring This back
-    // const hasAccess = Object.keys(room.usersAccesses).includes(userId);
+    const hasAccess = Object.keys(room.usersAccesses).includes(userId);
 
-    // if (!hasAccess) {
-    //   throw new Error("You don't have access to this document");
-    // }
+    if (!hasAccess) {
+      throw new Error("You don't have access to this document");
+    }
 
     return parseStringify(room);
   } catch (error) {
@@ -133,5 +133,15 @@ export const removeCollaborator = async ({
     return parseStringify(updatedRoom);
   } catch (error) {
     console.log(`Error happened while removing a collaborator: ${error}`);
+  }
+};
+// ? Delete a document by its ID
+export const deleteDocument = async (roomId: string) => {
+  try {
+    await liveblocks.deleteRoom(roomId);
+    revalidatePath("/");
+    redirect("/");
+  } catch (error) {
+    console.log(`Error happened while deleting a room: ${error}`);
   }
 };
