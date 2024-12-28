@@ -3,7 +3,7 @@ declare type SearchParamProps = {
   params: { [key: string]: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
-
+// types for object returned
 declare type AccessType = ["room:write"] | ["room:read", "room:presence:write"];
 
 declare type RoomAccesses = Record<string, AccessType>;
